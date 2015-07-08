@@ -2,7 +2,9 @@ var cluster = require( 'cluster' );
 var numCPUs = require( 'os' ).cpus().length;
 var conf = require( '../conf' ).server;
 
+var deepstream;
 var deepstreamConfig = conf.deepstreams;
+var completedDeepStreams = 0;
 var maxDeepstreams = deepstreamConfig.length;
 
 if( cluster.isMaster ) {
@@ -14,7 +16,11 @@ if( cluster.isMaster ) {
 
 	cluster.on( 'exit', onDeepstreamExited );
 } else {
-	require( './server' )( onDeepstreamStarted );
+	deepstream = require( './server' )( onDeepstreamStarted );
+	setTimeout( function() {
+		deepstream.stop();
+		process.exit();
+	}, conf.totalTestTime );
 }
 
 function startDeepstream( port ) {
@@ -34,6 +40,10 @@ function onDeepstreamExited( worker, code, signal ) {
 		console.log( "Worker was killed by signal: " + signal );
 	} else if( code !== 0 ) {
 		console.log( "Worker exited with error code: " + code );
+	}
+	completedDeepStreams++;
+	if( completedDeepStreams === numCPUs || completedDeepStreams === maxDeepstreams ) {
+		console.log( 'Server Performance Tests Finished' );
 	}
 }
 

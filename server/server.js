@@ -9,4 +9,5 @@ module.exports = function( onStart ) {
 		onStart && onStart( process.env.PORT );
 	} );
 	deepstream.start();
+	return deepstream;
 }
