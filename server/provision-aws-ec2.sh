@@ -34,6 +34,7 @@ e "Installing Performance Framework"
 cd ~
 git clone https://github.com/hoxton-one/deepstream.io-performance.git
 cd ~/deepstream.io-performance
+git pull https://github.com/hoxton-one/deepstream.io-performance.git
 npm install
 
 e "DONE!"

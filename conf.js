@@ -5,9 +5,10 @@ module.exports = {
 		spawningSpeed: 1000
 	},
 	client: {
-		deepstreamClientsAmount: 10,
+		deepStreamClientPairs: 1,
 		messageFrequency: 0,
 		messageLimit: 5000,
-		spawningSpeed: 1000
+		spawningSpeed: 1000,
+		logClientLatency: false
 	}
 }

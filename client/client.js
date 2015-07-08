@@ -7,15 +7,16 @@ module.exports = function( pid, clientType, deepstreamURL ) {
 
 	function updateRecord( record, data ) {
 		setTimeout( function() {
+			data.timestamp = Date.now();
 			record.set( data );
-		}, conf.messageFrequency )
+		}, conf.messageFrequency );
 	}
 
 	var ds = deepstream( deepstreamURL );
-	var userName = 'client-' + pid + '-' + clientType;
+	var userName = pid + '-' + clientType;
 
 	ds.on( 'error', function( e ) {
-		console.error( 'error occured', arguments );
+		console.log( 'error occured', arguments );
 	} );
 
 	ds.login( {
@@ -29,23 +30,25 @@ module.exports = function( pid, clientType, deepstreamURL ) {
 			var lastTimestamp = record.get( 'timestamp' );
 
 			if( record.get( 'ping' ) === conf.messageLimit ) {
-				console.log( 'deepstream ' + userName + ' client completed' );
 				ds.close();
+				process.send( {
+					pid: pid,
+					type: clientType,
+					latency: latency
+				} );
 				process.exit();
 			} else if( clientType === 'ping' && !( record.get( 'ping' ) === 1 && record.get( 'pong' ) === 0 ) ) {
 				updateRecord( record, {
-					'timestamp': Date.now(),
 					'ping': record.get( 'ping' ) + 1,
 					'pong': record.get( 'pong' ),
 				} );
+				latency.push( Date.now() - lastTimestamp );
 			} else if( clientType === 'pong' ) {
 				updateRecord( record, {
-					'timestamp': Date.now(),
 					'ping': record.get( 'ping' ),
 					'pong': record.get( 'pong' ) + 1,
 				} );
 			}
-			latency.push( Date.now() - lastTimestamp );
 		} );
 
 		if( clientType === 'ping' ) {
