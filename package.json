@@ -1,0 +1,28 @@
+{
+  "name": "deepstream.io-performance",
+  "version": "0.0.0",
+  "description": "A performance harness for deepstream.io",
+  "main": "server/cluster.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hoxton-one/deepstream.io-performance.git"
+  },
+  "keywords": [
+    "deepstream.io",
+    "performance"
+  ],
+  "author": "Yasser Fadl",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hoxton-one/deepstream.io-performance/issues"
+  },
+  "homepage": "https://github.com/hoxton-one/deepstream.io-performance#readme",
+  "devDependencies": {
+    "cluster": "^0.7.7",
+    "deepstream.io": "^0.2.16",
+    "deepstream.io-client-js": "^0.2.15"
+  }
+}
