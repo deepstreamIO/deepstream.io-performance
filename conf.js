@@ -10,6 +10,7 @@ module.exports = {
 		messageFrequency: 0,
 		messageLimit: 5000,
 		spawningSpeed: 1000,
-		logClientLatency: false
+		showLatency: false,
+		calculateLatency: false
 	}
 }

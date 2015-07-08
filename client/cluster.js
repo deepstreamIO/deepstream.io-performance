@@ -42,7 +42,7 @@ function onDeepstreamClientStarted( worker ) {
 			'\tMax Latency: ' + stats.max,
 			'\tAvg Latency: ' + stats.avg
 		].join( '\n' );
-		conf.logClientLatency && console.log( latencyLog );
+		conf.logLatency && console.log( latencyLog );
 	} );
 }
 

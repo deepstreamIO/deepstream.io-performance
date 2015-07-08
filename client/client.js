@@ -5,6 +5,23 @@ var latency = [];
 
 module.exports = function( pid, clientType, deepstreamURL ) {
 
+	function getLatencyStats( latency, result ) {
+		var l = latency[ 0 ];
+		var total = 0;
+		for( var i = 0; i < latency.length; i++ ) {
+			l = latency[ i ];
+			if( l > result.max ) {
+				result.max = l;
+			}
+			if( l < result.min ) {
+				result.min = l;
+			}
+			total += l;
+		}
+		result.avg = Math.round( total / latency.length );
+		return result;
+	}
+
 	function updateRecord( record, data ) {
 		setTimeout( function() {
 			data.timestamp = Date.now();
@@ -42,7 +59,7 @@ module.exports = function( pid, clientType, deepstreamURL ) {
 					'ping': record.get( 'ping' ) + 1,
 					'pong': record.get( 'pong' ),
 				} );
-				latency.push( Date.now() - lastTimestamp );
+				conf.calculateLatency && latency.push( Date.now() - lastTimestamp );
 			} else if( clientType === 'pong' ) {
 				updateRecord( record, {
 					'ping': record.get( 'ping' ),
