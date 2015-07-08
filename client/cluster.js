@@ -22,8 +22,8 @@ if( cluster.isMaster ) {
 	cluster.on( 'exit', onDeepstreamClientExited );
 	cluster.on( 'online', onDeepstreamClientStarted );
 } else {
-	require( './client' )( ++clientID, process.pid, 'ping', getDeepstreamURL() );
-	require( './client' )( ++clientID, process.pid, 'pong', getDeepstreamURL() );
+	require( './client' )( process.pid, 'ping', getDeepstreamURL() );
+	require( './client' )( process.pid, 'pong', getDeepstreamURL() );
 }
 
 function startDeepstreamClient() {
@@ -31,6 +31,8 @@ function startDeepstreamClient() {
 }
 
 function onDeepstreamClientStarted( worker ) {
+	clientID++;
+	console.log( 'Started client number: ' + clientID + ' with pid: ' + worker.process.pid );
 	worker.on( 'message', function( args ) {
 		getLatencyStats( args.latency, totalStats );
 		var stats = getLatencyStats( args.latency );

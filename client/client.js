@@ -3,7 +3,7 @@ var conf = require( '../conf' ).client;
 
 var latency = [];
 
-module.exports = function( clientNumber, pid, clientType, deepstreamURL ) {
+module.exports = function( pid, clientType, deepstreamURL ) {
 
 	function updateRecord( record, data ) {
 		setTimeout( function() {
@@ -13,7 +13,7 @@ module.exports = function( clientNumber, pid, clientType, deepstreamURL ) {
 	}
 
 	var ds = deepstream( deepstreamURL );
-	var userName = clientNumber + '-' + pid + '-' + clientType;
+	var userName = pid + '-' + clientType;
 
 	ds.on( 'error', function( e ) {
 		console.log( 'error occured', arguments );
@@ -22,7 +22,7 @@ module.exports = function( clientNumber, pid, clientType, deepstreamURL ) {
 	ds.login( {
 		username: userName
 	}, function( success, errorEvent, errorMessage ) {
-		console.log( 'deepstream ' + userName + ' client connected to ' + deepstreamURL );
+		//console.log( 'deepstream ' + userName + ' client connected to ' + deepstreamURL );
 
 		var record = ds.record.getRecord( 'perf/' + pid );
 
