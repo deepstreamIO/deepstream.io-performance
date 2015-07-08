@@ -21,10 +21,12 @@ if( cluster.isMaster ) {
 	cluster.on( 'exit', onDeepstreamExited );
 } else {
 	deepstream = require( './server' )( onDeepstreamStarted );
-	setTimeout( function() {
-		deepstream.stop();
-		process.exit();
-	}, conf.totalTestTime );
+	if( conf.totalTestTime !== -1 ) {
+		setTimeout( function() {
+			deepstream.stop();
+			process.exit();
+		}, conf.totalTestTime );
+	}
 }
 
 function startDeepstream( port ) {
@@ -37,7 +39,6 @@ function startDeepstream( port ) {
 
 function onDeepstreamStarted( port ) {
 	console.log( 'deepstream with PID:' + process.pid + ' listening on port ' + port );
-	//child_process.spawn,
 }
 
 function onDeepstreamOnline( worker ) {
@@ -45,6 +46,7 @@ function onDeepstreamOnline( worker ) {
 	console.log( 'deepstream spawned with PID:' + pid );
 	performanceUsage = spawn( 'bash' );
 	performanceUsage.stdin.write( 'rm -rf stats && mkdir stats\n' );
+	//Using pidstat
 	performanceUsage.stdin.write( 'pidstat -p ' + pid + ' -r 1 > stats/' + pid + '-memory.txt &\n' );
 	performanceUsage.stdin.write( 'pidstat -p ' + pid + ' 1 > stats/' + pid + '-cpu.txt &\n' );
 }

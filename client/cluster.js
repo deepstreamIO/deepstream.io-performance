@@ -2,6 +2,7 @@ var cluster = require( 'cluster' );
 var numCPUs = require( 'os' ).cpus().length;
 var conf = require( '../conf' ).client;
 
+var clientID = 0;
 var completedDeepStreamClientPairs = 0;
 var deepStreamPorts = require( '../conf' ).server.deepstreams;
 var deepStreamHost = require( '../conf' ).server.host;
@@ -21,8 +22,8 @@ if( cluster.isMaster ) {
 	cluster.on( 'exit', onDeepstreamClientExited );
 	cluster.on( 'online', onDeepstreamClientStarted );
 } else {
-	require( './client' )( process.pid, 'ping', getDeepstreamURL() );
-	require( './client' )( process.pid, 'pong', getDeepstreamURL() );
+	require( './client' )( ++clientID, process.pid, 'ping', getDeepstreamURL() );
+	require( './client' )( ++clientID, process.pid, 'pong', getDeepstreamURL() );
 }
 
 function startDeepstreamClient() {
