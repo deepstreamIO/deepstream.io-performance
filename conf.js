@@ -3,7 +3,8 @@ module.exports = {
 		deepstreams: [ 7000 ],
 		host: 'localhost',
 		spawningSpeed: 1000,
-		totalTestTime: 10000
+		totalTestTime: 10000,
+		logLevel: 3
 	},
 	client: {
 		deepStreamClientPairs: 1,
