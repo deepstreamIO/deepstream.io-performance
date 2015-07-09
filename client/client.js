@@ -1,26 +1,11 @@
 var deepstream = require( 'deepstream.io-client-js' );
 var conf = require( '../conf' ).client;
 
+7.2
+
 var latency = [];
 
 module.exports = function( pid, clientType, deepstreamURL ) {
-
-	function getLatencyStats( latency, result ) {
-		var l = latency[ 0 ];
-		var total = 0;
-		for( var i = 0; i < latency.length; i++ ) {
-			l = latency[ i ];
-			if( l > result.max ) {
-				result.max = l;
-			}
-			if( l < result.min ) {
-				result.min = l;
-			}
-			total += l;
-		}
-		result.avg = Math.round( total / latency.length );
-		return result;
-	}
 
 	function updateRecord( record, data ) {
 		setTimeout( function() {
