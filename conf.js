@@ -1,7 +1,7 @@
 module.exports = {
 	server: {
 		deepstreams: [ 7000 ],
-		host: 'localhost',
+		host: 'ec2-52-28-187-183.eu-central-1.compute.amazonaws.com',
 		spawningSpeed: 1000,
 		totalTestTime: 10000,
 		logLevel: 3
