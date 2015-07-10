@@ -46,9 +46,8 @@ function onDeepstreamOnline( worker ) {
 	console.log( 'deepstream spawned with PID:' + pid );
 	performanceUsage = spawn( 'bash' );
 	performanceUsage.stdin.write( 'rm -rf stats && mkdir stats\n' );
-	//Using pidstat
-	performanceUsage.stdin.write( 'pidstat -p ' + pid + ' -r 1 > stats/' + pid + '-memory.txt &\n' );
-	performanceUsage.stdin.write( 'pidstat -p ' + pid + ' 1 > stats/' + pid + '-cpu.txt &\n' );
+	//Using top
+	performanceUsage.stdin.write( 'top -p ' + pid + ' -b -d 1 > stats/' + pid + '.txt &\n' );
 }
 
 function onDeepstreamExited( worker, code, signal ) {
