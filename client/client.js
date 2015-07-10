@@ -1,11 +1,9 @@
 var deepstream = require( 'deepstream.io-client-js' );
 var conf = require( '../conf' ).client;
 
-7.2
-
 var latency = [];
 
-module.exports = function( pid, clientType, deepstreamURL ) {
+module.exports = function( clientID, clientType, deepstreamURL ) {
 
 	function updateRecord( record, data ) {
 		setTimeout( function() {
@@ -15,7 +13,7 @@ module.exports = function( pid, clientType, deepstreamURL ) {
 	}
 
 	var ds = deepstream( deepstreamURL );
-	var userName = pid + '-' + clientType;
+	var userName = clientID + '-' + clientType;
 
 	ds.on( 'error', function( e ) {
 		console.log( 'error occured', arguments );
@@ -24,21 +22,22 @@ module.exports = function( pid, clientType, deepstreamURL ) {
 	ds.login( {
 		username: userName
 	}, function( success, errorEvent, errorMessage ) {
-		//console.log( 'deepstream ' + userName + ' client connected to ' + deepstreamURL );
-
-		var record = ds.record.getRecord( 'perf/' + pid );
+		var record = ds.record.getRecord( 'perf/' + clientID );
 
 		record.subscribe( clientType === 'ping' ? 'pong' : 'ping', function( data ) {
 			var lastTimestamp = record.get( 'timestamp' );
 
 			if( record.get( 'ping' ) === conf.messageLimit ) {
 				ds.close();
-				process.send( {
-					pid: pid,
-					type: clientType,
-					latency: latency
-				} );
-				process.exit();
+				if( typeof window === 'undefined' ) {
+					process.send( {
+						clientID: clientID,
+						type: clientType,
+						latency: latency
+					} );
+				} else {
+					console.log( 'Message limit reached' );
+				}
 			} else if( clientType === 'ping' && !( record.get( 'ping' ) === 1 && record.get( 'pong' ) === 0 ) ) {
 				updateRecord( record, {
 					'ping': record.get( 'ping' ) + 1,

@@ -2,42 +2,57 @@ var cluster = require( 'cluster' );
 var numCPUs = require( 'os' ).cpus().length;
 var conf = require( '../conf' ).client;
 
-var clientID = 0;
+validateConfig();
 var completedDeepStreamClientPairs = 0;
 var deepStreamPorts = require( '../conf' ).server.deepstreams;
 var deepStreamHost = require( '../conf' ).server.host;
-validateConfig();
+
 var totalStats = {
 	min: 0,
 	max: 0
 };
 
 if( cluster.isMaster ) {
+	var clientSpread = getClientSpread();
 	console.log( 'Running deepstream client cluster with ' + conf.deepStreamClientPairs + ' client pairs on machine with ' + numCPUs + ' cores' );
 
-	for( var i = 0; i < conf.deepStreamClientPairs; i++ ) {
-		setTimeout( startDeepstreamClient, conf.spawningSpeed * i );
+	for( var i = 0; i < clientSpread.length && clientSpread[ i ] > 0; i++ ) {
+		setTimeout( startDeepstreamClientBatchProcess.bind( null, clientSpread[ i ], i ), clientSpread[ i ] * i * conf.spawningSpeed );
 	}
 
 	cluster.on( 'exit', onDeepstreamClientExited );
 	cluster.on( 'online', onDeepstreamClientStarted );
 } else {
-	require( './client' )( process.pid, 'ping', getDeepstreamURL() );
-	require( './client' )( process.pid, 'pong', getDeepstreamURL() );
+	process.setMaxListeners( 0 );
+	var processID = Number( process.env.firstClientID );
+	for( var i = 0; i < process.env.clientAmount; i++ ) {
+		setTimeout( startDeepstreamClient( processID + i ), conf.spawningSpeed * i );
+	}
 }
 
-function startDeepstreamClient() {
-	cluster.fork( {} );
+function startDeepstreamClientBatchProcess( clientAmount, processNumber ) {
+	cluster.fork( {
+		clientAmount: clientAmount,
+		firstClientID: processNumber * clientAmount
+	} );
+}
+
+function startDeepstreamClient( clientID ) {
+	return function() {
+		clientID = clientID + '-' + Date.now();
+		console.log( 'Starting client:', clientID );
+		require( './client' )( clientID, 'ping', getDeepstreamURL() );
+		require( './client' )( clientID, 'pong', getDeepstreamURL() );
+	}
 }
 
 function onDeepstreamClientStarted( worker ) {
-	clientID++;
-	console.log( 'Started client number: ' + clientID + ' with pid: ' + worker.process.pid );
+	console.log( 'Started client with pid: ' + worker.process.pid );
 	worker.on( 'message', function( args ) {
 		getLatencyStats( args.latency, totalStats );
 		var stats = getLatencyStats( args.latency );
 		var latencyLog = [
-			'Process ' + args.pid + ' completed',
+			'Process ' + args.clientID + ' completed',
 			'\tMin Latency: ' + stats.min,
 			'\tMax Latency: ' + stats.max,
 			'\tAvg Latency: ' + stats.avg
@@ -95,4 +110,20 @@ function getLatencyStats( latency, result ) {
 	}
 	result.avg = Math.round( total / latency.length );
 	return result;
+}
+
+function getClientSpread() {
+	var clients = [];
+	if( conf.deepStreamClientPairs / numCPUs < 0 ) {
+		clients = Array.apply( null, Array( conf.deepStreamClientPairs ) ).map( Number.prototype.valueOf, 1 );
+	} else {
+		var remainder = conf.deepStreamClientPairs % numCPUs;
+		var clientPairsPerCPU = ( conf.deepStreamClientPairs - remainder ) / numCPUs;
+		clients = Array.apply( null, Array( numCPUs ) ).map( Number.prototype.valueOf, clientPairsPerCPU );
+		for( var i = 0; i < remainder; i++ ) {
+			clients[ i ]++;
+		}
+	}
+	console.log( clients )
+	return clients;
 }
