@@ -55,7 +55,8 @@ function onDeepstreamClientStarted( worker ) {
 			'Process ' + args.clientID + ' completed',
 			'\tMin Latency: ' + stats.min,
 			'\tMax Latency: ' + stats.max,
-			'\tAvg Latency: ' + stats.avg
+			'\tAvg Latency: ' + stats.avg,
+			'\tLatency: ' + args.latency
 		].join( '\n' );
 		conf.logLatency && console.log( latencyLog );
 	} );

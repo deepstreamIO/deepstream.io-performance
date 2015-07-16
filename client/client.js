@@ -35,11 +35,6 @@ module.exports = function( clientID, clientType, deepstreamURL ) {
 						type: clientType,
 						latency: latency
 					} );
-					var latencyLog = [
-						'Process ' + clientID + ' completed',
-						'\nLatency: ' + latency
-					].join( '\n' );
-					conf.logLatency && console.log( latencyLog );
 				} else {
 					console.log( 'Message limit reached' );
 				}
