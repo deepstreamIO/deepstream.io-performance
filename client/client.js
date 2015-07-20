@@ -12,6 +12,19 @@ module.exports = function( clientID, clientType, deepstreamURL ) {
 		}, conf.messageFrequency );
 	}
 
+	function closeClient() {
+		if( typeof window === 'undefined' && latency.length > 0 ) {
+			process.send( {
+				clientID: clientID,
+				type: clientType,
+				latency: latency
+			} );
+		} else {
+			console.log( 'Message limit reached' );
+		}
+	}
+	
+
 	var ds = deepstream( deepstreamURL );
 	var userName = clientID + '-' + clientType;
 
@@ -27,23 +40,18 @@ module.exports = function( clientID, clientType, deepstreamURL ) {
 		record.subscribe( clientType === 'ping' ? 'pong' : 'ping', function( data ) {
 			var lastTimestamp = record.get( 'timestamp' );
 
-			if( record.get( 'ping' ) === conf.messageLimit ) {
+			if( record.get( 'ping' ) === conf.messageLimit  ) {
 				ds.close();
-				if( typeof window === 'undefined' ) {
-					process.send( {
-						clientID: clientID,
-						type: clientType,
-						latency: latency
-					} );
-				} else {
-					console.log( 'Message limit reached' );
-				}
+				closeClient();
 			} else if( clientType === 'ping' && !( record.get( 'ping' ) === 1 && record.get( 'pong' ) === 0 ) ) {
 				updateRecord( record, {
 					'ping': record.get( 'ping' ) + 1,
 					'pong': record.get( 'pong' ),
 				} );
 				conf.calculateLatency && latency.push( Date.now() - lastTimestamp );
+				if( record.get( 'ping' ) === conf.messageLimit - 1  ) {
+					closeClient();
+				}
 			} else if( clientType === 'pong' ) {
 				updateRecord( record, {
 					'ping': record.get( 'ping' ),
