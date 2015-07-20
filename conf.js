@@ -1,15 +1,15 @@
 module.exports = {
 	server: {
-		deepstreams: [ 7000 ],
-		host: 'ec2-52-28-25-217.eu-central-1.compute.amazonaws.com',
+		deepstreams: [ 7000, 7001, 7002 ],
+		host: 'ec2-52-28-172-103.eu-central-1.compute.amazonaws.com',
 		spawningSpeed: 1000,
 		totalTestTime: 10000,
 		logLevel: 3
 	},
 	client: {
-		deepStreamClientPairs: 25,
+		deepStreamClientPairs: 125,
 		messageFrequency: 25,
-		messageLimit: 500,
+		messageLimit: 20000,
 		spawningSpeed: 100,
 		logLatency: true,
 		calculateLatency: true
