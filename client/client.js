@@ -1,9 +1,9 @@
 var deepstream = require( 'deepstream.io-client-js' );
 var conf = require( '../conf' ).client;
 
-var latency = [];
-
 module.exports = function( clientID, clientType, deepstreamURL ) {
+
+	var latency = [];
 
 	function updateRecord( record, data ) {
 		setTimeout( function() {
@@ -61,7 +61,4 @@ module.exports = function( clientID, clientType, deepstreamURL ) {
 		}
 
 	} );
-
-
-
 }
