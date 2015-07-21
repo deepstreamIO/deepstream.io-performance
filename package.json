@@ -22,7 +22,6 @@
   "homepage": "https://github.com/hoxton-one/deepstream.io-performance#readme",
   "devDependencies": {
     "cluster": "^0.7.7",
-    "deepstream.io": "^0.2.16",
     "deepstream.io-client-js": "^0.2.15"
   },
   "dependencies": {
