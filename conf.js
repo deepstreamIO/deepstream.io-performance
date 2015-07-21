@@ -1,17 +1,17 @@
 module.exports = {
 	server: {
-		deepstreams: [ 7000, 7001, 7002 ],
-		host: 'ec2-52-28-146-161.eu-central-1.compute.amazonaws.com',
-		spawningSpeed: 1000,
-		totalTestTime: 10000,
-		logLevel: 3
+		deepstreams: ( process.env.DEEPSTREAMS && process.env.DEEPSTREAMS.split(',') ) || [ 6021 ],
+		host: process.env.HOST || 'localhost',
+		spawningSpeed: process.env.SPAWNING_SPEED || 1000,
+		totalTestTime: process.env.TEST_TIME || 100000,
+		logLevel: process.env.LOG_LEVEL || 3
 	},
 	client: {
-		deepStreamClientPairs: 125,
-		messageFrequency: 25,
-		messageLimit: 20000,
-		spawningSpeed: 100,
-		logLatency: true,
-		calculateLatency: true
+		deepStreamClientPairs: process.env.CLIENT_PAIRS || 20,
+		messageFrequency: process.env.MESSAGE_FREQUENCY || 25,
+		messageLimit: process.env.MESSAGE_LIMIT || 200,
+		spawningSpeed: process.env.SPAWNING_SPEED || 100,
+		logLatency: process.env.LOG_LATENCY || true,
+		calculateLatency: process.env.CALCULATE_LATENCY || true
 	}
 }

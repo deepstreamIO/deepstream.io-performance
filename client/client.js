@@ -1,8 +1,10 @@
 var deepstream = require( 'deepstream.io-client-js' );
 var conf = require( '../conf' ).client;
 
-module.exports = function( clientID, clientType, deepstreamURL ) {
+module.exports = function( clientID, clientType, deepstreamURL, core ) {
 
+	var isOdd = clientType === 'odd';
+	var isEven = clientType === 'even';
 	var latency = [];
 
 	function updateRecord( record, data ) {
@@ -13,14 +15,17 @@ module.exports = function( clientID, clientType, deepstreamURL ) {
 	}
 
 	function closeClient() {
+		ds.close();
+
 		if( typeof window === 'undefined' && latency.length > 0 ) {
 			process.send( {
 				clientID: clientID,
 				type: clientType,
-				latency: latency
+				latency: latency, 
+				core: core
 			} );
 		} else {
-			console.log( 'Message limit reached' );
+			console.log( 'Message limit reached by ', clientID );
 		}
 	}
 	
@@ -37,36 +42,34 @@ module.exports = function( clientID, clientType, deepstreamURL ) {
 	}, function( success, errorEvent, errorMessage ) {
 		var record = ds.record.getRecord( 'perf/' + clientID );
 
-		record.subscribe( clientType === 'ping' ? 'pong' : 'ping', function( data ) {
+		record.subscribe( 'count', function( data ) {
 			var lastTimestamp = record.get( 'timestamp' );
+			var count = record.get( 'count' );
+			var newCount = count+1;
 
-			if( record.get( 'ping' ) === conf.messageLimit  ) {
-				ds.close();
+			var incrementOdd = isOdd && count % 2 > 0;
+			var incementEven = isEven && count % 2 === 0;
+
+			if( incementEven || incrementOdd ) {
+				updateRecord( record, {
+					'count': newCount
+				} );
+			} 
+
+			if( incementEven && conf.calculateLatency ) {
+				latency.push( Date.now() - lastTimestamp );
+			}
+
+			if( newCount === conf.messageLimit  ) {
 				closeClient();
-			} else if( clientType === 'ping' && !( record.get( 'ping' ) === 1 && record.get( 'pong' ) === 0 ) ) {
-				updateRecord( record, {
-					'ping': record.get( 'ping' ) + 1,
-					'pong': record.get( 'pong' ),
-				} );
-				conf.calculateLatency && latency.push( Date.now() - lastTimestamp );
-				if( record.get( 'ping' ) === conf.messageLimit - 1  ) {
-					closeClient();
-				}
-			} else if( clientType === 'pong' ) {
-				updateRecord( record, {
-					'ping': record.get( 'ping' ),
-					'pong': record.get( 'pong' ) + 1,
-				} );
 			}
 		} );
 
-		if( clientType === 'ping' ) {
+		if( clientType === 'even' ) {
 			record.set( {
-				ping: 1,
-				pong: 0,
+				count: 0,
 				timestamp: Date.now()
 			} );
 		}
-
 	} );
 }
