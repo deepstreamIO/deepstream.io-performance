@@ -1,0 +1,5 @@
+connected to deepstream on port 6005
+connected to deepstream on port 6006
+connected to deepstream on port 6007
+connected to deepstream on port 6008
+got connection

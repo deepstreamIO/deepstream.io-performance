@@ -1,0 +1,31 @@
+created 84 clients
+Updates 65338
+avg latency 882.7598028712234
+max latency 1692
+min latency 18
+--------------------
+Updates 149625
+avg latency 1838.2077794486215
+max latency 3680
+min latency 18
+--------------------
+Updates 234150
+avg latency 2891.561678411275
+max latency 5669
+min latency 18
+--------------------
+Updates 323980
+avg latency 3914.4466109019077
+max latency 7557
+min latency 18
+--------------------
+Updates 419276
+avg latency 4961.933735773095
+max latency 9444
+min latency 18
+--------------------
+Updates 495600
+avg latency 5775.479665052461
+max latency 11296
+min latency 18
+--------------------
