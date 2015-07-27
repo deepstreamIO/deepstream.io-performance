@@ -1,0 +1,23 @@
+{
+	"apps": [{
+		"name": "ds-server-6005",
+		"script": "ds-server.js",
+		"args": ["6005"],
+		"out_file": "logs/ds-server-6005.txt"
+	},{
+		"name": "ds-server-6006",
+		"script": "ds-server.js",
+		"args": ["6006"],
+		"out_file": "logs/ds-server-6006.txt"
+	},{
+		"name": "ds-server-6007",
+		"script": "ds-server.js",
+		"args": ["6007"],
+		"out_file": "logs/ds-server-6007.txt"
+	},{
+		"name": "ds-server-6008",
+		"script": "ds-server.js",
+		"args": ["6008"],
+		"out_file": "logs/ds-server-6008.txt"
+	}]
+}

@@ -28,6 +28,7 @@ function sendUpdates() {
 	if( updateCount >= totalUpdates ) {
 		clearInterval( updateIntervalId );
 		console.log( 'Done!. Send ' + updateCount + ' updates ' );
+		process.exit();
 	}
 }
 

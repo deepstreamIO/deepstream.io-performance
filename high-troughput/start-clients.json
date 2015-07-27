@@ -1,0 +1,69 @@
+{
+	"apps": [{
+		"name": "multi-client-1-6005",
+		"script": "multi-client.js",
+		"args": ["84", "6005"],
+		"out_file": "logs/multi-client-1-6005.txt"
+	},{
+		"name": "multi-client-2-6005",
+		"script": "multi-client.js",
+		"args": ["84", "6005"],
+		"out_file": "logs/multi-client-2-6005.txt"
+	},{
+		"name": "multi-client-3-6005",
+		"script": "multi-client.js",
+		"args": ["84", "6005"],
+		"out_file": "logs/multi-client-3-6005.txt"
+	},
+
+	{
+		"name": "multi-client-1-6006",
+		"script": "multi-client.js",
+		"args": ["84", "6006"],
+		"out_file": "logs/multi-client-1-6006.txt"
+	},{
+		"name": "multi-client-2-6006",
+		"script": "multi-client.js",
+		"args": ["84", "6006"],
+		"out_file": "logs/multi-client-2-6006.txt"
+	},{
+		"name": "multi-client-3-6006",
+		"script": "multi-client.js",
+		"args": ["84", "6006"],
+		"out_file": "logs/multi-client-3-6006.txt"
+	},
+
+	{
+		"name": "multi-client-1-6007",
+		"script": "multi-client.js",
+		"args": ["84", "6007"],
+		"out_file": "logs/multi-client-1-6007.txt"
+	},{
+		"name": "multi-client-2-6007",
+		"script": "multi-client.js",
+		"args": ["84", "6007"],
+		"out_file": "logs/multi-client-2-6007.txt"
+	},{
+		"name": "multi-client-3-6007",
+		"script": "multi-client.js",
+		"args": ["84", "6007"],
+		"out_file": "logs/multi-client-3-6007.txt"
+	},
+	
+	{
+		"name": "multi-client-1-6008",
+		"script": "multi-client.js",
+		"args": ["84", "6008"],
+		"out_file": "logs/multi-client-1-6008.txt"
+	},{
+		"name": "multi-client-2-6008",
+		"script": "multi-client.js",
+		"args": ["84", "6008"],
+		"out_file": "logs/multi-client-2-6008.txt"
+	},{
+		"name": "multi-client-3-6008",
+		"script": "multi-client.js",
+		"args": ["84", "6008"],
+		"out_file": "logs/multi-client-3-6008.txt"
+	}]
+}

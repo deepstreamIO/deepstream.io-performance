@@ -5,8 +5,9 @@ if( isNaN( port ) ) {
 }
 server.set( 'tcpHost', 'localhost' );
 server.set( 'tcpPort', port );
-server.set( 'port', port + 10 );
-server.start();
+server.set( 'port', port + 20 );
+server.set( 'colors', false );
 server.on( 'started', function(){
 	console.log( 'started server on ' + port );
 });
+server.start();
