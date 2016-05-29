@@ -8,24 +8,24 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hoxton-one/deepstream.io-performance.git"
+    "url": "git+https://github.com/deepstreamIO/deepstream.io-performance.git"
   },
   "keywords": [
     "deepstream.io",
     "performance"
   ],
-  "author": "Yasser Fadl",
+  "author": "deepstreamHub GmbH",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hoxton-one/deepstream.io-performance/issues"
+    "url": "https://github.com/deepstreamIO/deepstream.io-performance/issues"
   },
-  "homepage": "https://github.com/hoxton-one/deepstream.io-performance#readme",
+  "homepage": "https://github.com/deepstreamIO/deepstream.io-performance#readme",
   "devDependencies": {
     "cluster": "^0.7.7",
-    "deepstream.io-client-js": "^0.2.15"
+    "deepstream.io-client-js": "latest"
   },
   "dependencies": {
     "browserify": "^10.2.6",
-    "deepstream.io-msg-redis": "^0.2.6"
+    "deepstream.io-msg-redis": "latest"
   }
 }

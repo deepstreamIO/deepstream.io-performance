@@ -1,15 +1,15 @@
 {
-  "name": "high-troughput",
+  "name": "high-throughput",
   "version": "1.0.0",
   "description": "Performance test for a high number of one-directional messages",
   "main": "ds-server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "deepstreamHub GmbH",
+  "license": "MIT",
   "dependencies": {
-    "deepstream.io": "^0.4.0",
-    "deepstream.io-client-js": "^0.2.15"
+    "deepstream.io": "latest",
+    "deepstream.io-client-js": "latest"
   }
 }
