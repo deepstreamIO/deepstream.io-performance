@@ -7,9 +7,9 @@ module.exports = function( onStart ) {
 	  port: 6379, 
 	  host: 'localhost' 
 	}));
-	deepstream.set( 'showLogo', false );
+	//deepstream.set( 'showLogo', false );
 	deepstream.set( 'tcpPort', process.env.PORT );
-	deepstream.set( 'logLevel', conf.logLevel );
+	//deepstream.set( 'logLevel', conf.logLevel );
 	deepstream.on( 'started', function() {
 		onStart && onStart( process.env.PORT );
 	} );

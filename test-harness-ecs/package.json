@@ -1,0 +1,29 @@
+{
+  "name": "deepstream.io-performance",
+  "version": "0.0.0",
+  "description": "A performance harness for deepstream.io",
+  "main": "server/cluster.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deepstreamIO/deepstream.io-performance.git"
+  },
+  "keywords": [
+    "deepstream.io",
+    "performance"
+  ],
+  "author": "deepstreamHub GmbH",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/deepstreamIO/deepstream.io-performance/issues"
+  },
+  "homepage": "https://github.com/deepstreamIO/deepstream.io-performance#readme",
+  "dependencies": {
+    "aws-sdk": "latest",
+    "deepstream.io": "latest",
+    "deepstream.io-client-js": "latest",
+    "deepstream.io-msg-redis": "latest"
+  }
+}
