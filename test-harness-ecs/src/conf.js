@@ -1,7 +1,8 @@
 module.exports = {
 	server: {
-		port: 6021,
-		totalTestTime: process.env.TEST_TIME || 5000,
+		tcpPort: process.env.TCP_PORT || 6021,
+		port: process.env.PORT || 6020,
+		totalTestTime: process.env.TEST_TIME || -1,
 		logLevel: process.env.LOG_LEVEL || 3
 	},
 	client: {
@@ -10,11 +11,11 @@ module.exports = {
 		messageFrequency: process.env.MESSAGE_FREQUENCY || 20,
 		messageLimit: process.env.MESSAGE_LIMIT || 200,
 		spawningSpeed: process.env.SPAWNING_SPEED || 100,
-		logLatency: process.env.LOG_LATENCY || true
+		logLatency: process.env.LOG_LATENCY === 'true' || true
 	},
 	S3: {
-		enabled: true,
-		bucket: 'ds-performance-results',
+		enabled: process.env.S3_ENABLED === 'true' || true,
+		bucket: process.env.S3_BUCKET || 'ds-performance-results',
 		dir: 'performance'
 	}
 }

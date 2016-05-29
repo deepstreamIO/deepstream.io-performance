@@ -13,7 +13,8 @@ deepstream.set('messageConnector', new RedisMessageConnector( {
 		host: process.env.REDIS_HOST || 'localhost'
 	}));
 deepstream.set( 'showLogo', false );
-deepstream.set( 'tcpPort', conf.port );
+deepstream.set( 'tcpPort', conf.tcpPort );
+deepstream.set( 'port', conf.port );
 deepstream.set( 'logLevel', conf.logLevel );
 deepstream.on( 'started', onDeepstreamStarted );
 deepstream.on( 'stopped', onDeepstreamStopped );
