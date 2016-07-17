@@ -1,0 +1,43 @@
+# General
+libDir: /var/lib/deepstream
+
+# Logger Configuration
+# logger:
+#   name: winston
+#   options:
+#     # specify a list of transports (console, file, time)
+#     -
+#       type: console
+#       options:
+#         level: info # value of logLevel will always overwrite this value
+#         colorize: true
+#     -
+#       type: time
+#       options:
+#         filename: ../var/deepstream
+
+# Plugin Configuration
+plugins:
+  message:
+    name: redis
+    options:
+      host: localhost
+      port: 6379
+
+  cache:
+    name: redis
+    options:
+      host: localhost
+      port: 6379
+  #
+  # storage:
+  #   name: rethinkdb
+  #   options:
+  #     host: localhost
+  #     port: 28015
+
+auth:
+  type: none
+
+permission:
+  type: none

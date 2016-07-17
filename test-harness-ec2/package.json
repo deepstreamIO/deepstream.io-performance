@@ -22,8 +22,6 @@
   "homepage": "https://github.com/deepstreamIO/deepstream.io-performance#readme",
   "dependencies": {
     "aws-sdk": "latest",
-    "deepstream.io": "latest",
-    "deepstream.io-client-js": "latest",
-    "deepstream.io-msg-redis": "latest"
+    "deepstream.io-client-js": "latest"
   }
 }
