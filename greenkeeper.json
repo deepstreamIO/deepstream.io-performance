@@ -1,0 +1,11 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "high-throughput/package.json",
+        "test-harness-ec2/package.json",
+        "test-harness/package.json"
+      ]
+    }
+  }
+}
