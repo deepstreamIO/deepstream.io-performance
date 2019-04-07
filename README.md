@@ -1,4 +1,7 @@
 # deepstream.io-performance
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/deepstreamIO/deepstream.io-performance.svg)](https://greenkeeper.io/)
+
 A performance harness for deepstream.io
 
 Details on options can be seen [here](deepstream.io/info/performance-overview.html )
